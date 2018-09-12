@@ -126,3 +126,58 @@ REDIS = {
     'port': 6379,
     'db': 15
 }
+
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s %(module)s.%(funcName)s: %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+        'verbose': {
+            'format': ('%(asctime)s %(levelname)s [%(process)d-%(threadName)s] '
+                       '%(module)s.%(funcName)s line %(lineno)d: %(message)s'),
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        }
+    },
+
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG' if DEBUG else 'WARNING'
+        },
+        'info': {
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': '{BASE_DIR}/logs/info.log',
+            'when': 'D',  # 每天切割日志
+            'backupCount': 30,
+            'formatter': 'simple',
+            'level': 'INFO',
+        },
+        'error': {
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': '{BASE_DIR}/logs/error.log',
+            'when': 'W0',  # 每周一切割日志
+            'backupCount': 4,
+            'formatter': 'verbose',
+            'level': 'WARNING',
+        }
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+        },
+        'inf': {
+            'handlers': ['info'],
+            'propagate': True,
+        },
+        'err': {
+            'handlers': ['error'],
+            'propagate': True,
+        }
+    }
+}
