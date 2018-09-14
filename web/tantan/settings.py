@@ -25,17 +25,15 @@ SECRET_KEY = 'k$gybxt1($!)w=0=(7+@-f(wz&9t*z7joo41jike@3me6wm!nx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
 
@@ -44,8 +42,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -60,8 +56,6 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -151,7 +145,7 @@ LOGGING = {
         },
         'info': {
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': '{BASE_DIR}/logs/info.log',
+            'filename': f'{BASE_DIR}/logs/info.log',
             'when': 'D',  # 每天切割日志
             'backupCount': 30,
             'formatter': 'simple',
@@ -159,7 +153,7 @@ LOGGING = {
         },
         'error': {
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': '{BASE_DIR}/logs/error.log',
+            'filename': f'{BASE_DIR}/logs/error.log',
             'when': 'W0',  # 每周一切割日志
             'backupCount': 4,
             'formatter': 'verbose',
