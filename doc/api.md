@@ -25,12 +25,12 @@
 1. User
     ```json
     {
-        "uid": 123,              // 用户 id
-        "username": "Miao",      // 用户名
-        "age": 21,               // 年龄
-        "sex": "M",              // 性别
-        "location": "中国，北京",  // 常居地
-        "avatars": [             // 头像 URL 列表, 最多为 6 张
+        "uid": 123,                  // 用户 id
+        "nickname": "Miao",          // 用户名
+        "age": 21,                   // 年龄
+        "sex": "M",                  // 性别
+        "location": "中国/北京/北京",  // 常居地
+        "avatars": [                 // 头像 URL 列表, 最多为 6 张
             "http://xxx.com/user/avatar/123/1.jpg",
             "http://xxx.com/user/avatar/123/2.jpg",
             "http://xxx.com/user/avatar/123/3.jpg",
