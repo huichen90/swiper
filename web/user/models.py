@@ -10,6 +10,7 @@ class User(models.Model):
         ('Female', '女'),
     )
 
+    phonenum = models.CharField(max_length=16, unique=True)
     nickname = models.CharField(max_length=16, unique=True)
     password = models.CharField(max_length=128)
 

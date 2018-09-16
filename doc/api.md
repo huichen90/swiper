@@ -44,7 +44,7 @@
 1. 提交手机号
     * **Description**: 提交手机号，根据结果判断下一步需要提交的数据
     * **Method**: POST
-    * **Path**: /user/authorize/phone
+    * **Path**: /user/verify/phone
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
@@ -55,7 +55,7 @@
 2. 提交验证码
     * **Description**: 根据上一步的结果提交需要的数据
     * **Method**: POST
-    * **Path**: /user/authorize/code
+    * **Path**: /user/verify/code
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
