@@ -35,5 +35,4 @@ def rewind(request):
 @require_POST
 def stepup(request):
     '''增加曝光率'''
-    stranger_id = int(request.POST.get('stranger_id'))
-    return helper.stepup(stranger_id)
+    return helper.stepup()
