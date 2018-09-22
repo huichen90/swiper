@@ -4,12 +4,17 @@ class LogicError(BaseException):
     '''程序内部逻辑错误'''
     code = None
 
+    def __init__(self, data=None):
+        self.data = data  # 发生异常时需要传回前端的数据
+
     def __str__(self):
         return self.__class__.__name__
 
 
 def gen_error(name: str, err_code: int) -> LogicError:
-    return type(name, (LogicError,), {'code': err_code})
+    base_cls = (LogicError,)
+    cls_attr = {'code': err_code}
+    return type(name, base_cls, cls_attr)
 
 # 正常
 OK = gen_error('OK', 0)
@@ -24,6 +29,7 @@ PermissionDenied = gen_error('PermissionDenied', 1005)  # 没有权限
 Timeout = gen_error('Timeout', 1006)                    # 超时
 Expired = gen_error('Expired', 1007)                    # 已过期
 NotYetTime = gen_error('NotYetTime', 1008)              # 时间未到
+InvalidPIN = gen_error('InvalidPIN', 1009)              # 无效验证码
 
 # 用户类错误
 LoginRequired = gen_error('LoginRequired', 2000)    # 用户未登录

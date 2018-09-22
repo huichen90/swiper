@@ -29,6 +29,7 @@ class JsonMiddleware(MiddlewareMixin):
         if isinstance(exception, errors.LogicError):
             return render_json(error=exception)
         else:
+            # TODO: 向开发者发送异常告警邮件
             error_info = format_exception(*exc_info())
             err_log.error(''.join(error_info))  # 输出错误日志
             return render_json(error=errors.InternalError)
@@ -37,14 +38,21 @@ class JsonMiddleware(MiddlewareMixin):
 class AuthMiddleware(MiddlewareMixin):
     '''登陆认证检查中间件'''
     # 不需要检查的路径
-    PATH_WHITE_LIST = [
-        '/user/register/',
-        '/user/login/',
+    IGNORED_PATH_LIST = [
+        '/user/verify/phone',
+        '/user/verify/code',
     ]
+
+    def is_ignored_path(self, path):
+        '''是否是需要忽略的路径'''
+        for ignored_path in self.IGNORED_PATH_LIST:
+            if path.startswith(ignored_path):
+                return True
+        return False
 
     def process_request(self, request):
         # 排除白名单里的路径
-        if request.path in self.PATH_WHITE_LIST:
+        if self.is_ignored_path(request.path):
             return
 
         # 检查 uid 是否存在于 session 中
