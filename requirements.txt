@@ -1,3 +1,4 @@
+celery==4.2.1
 Django==1.11.7
 django-redis==4.9.0
 gunicorn==19.9.0
