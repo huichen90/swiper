@@ -11,8 +11,7 @@ class User(models.Model):
     )
 
     phonenum = models.CharField(max_length=16, unique=True)
-    nickname = models.CharField(max_length=16, unique=True)
-    password = models.CharField(max_length=128)
+    nickname = models.CharField(max_length=16)
 
     # user info
     sex = models.CharField(max_length=16, choices=SEX)
@@ -29,11 +28,18 @@ class User(models.Model):
 
     @cached_property
     def avatar(self):
+        '''头像'''
         return Avatar.objects.get_or_create(id=self.id)[0]
 
     @cached_property
     def profile(self):
+        '''资料'''
         return Profile.objects.get_or_create(id=self.id)[0]
+
+    @cached_property
+    def is_dating_ready(self):
+        '''检查资料是否完整'''
+        pass
 
     def to_dict(self):
         return {
@@ -63,9 +69,9 @@ class Avatar(models.Model):
 
 class Profile(models.Model):
     SEX = (
-        ('Male', '男性')
-        ('Female', '女性')
-        ('All', '不限'')
+        ('Male', '男性'),
+        ('Female', '女性'),
+        ('All', '不限'),
     )
     # 交友设置
     location = models.CharField(max_length=32, verbose_name='目标城市')
