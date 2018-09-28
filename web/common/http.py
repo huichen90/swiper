@@ -3,6 +3,7 @@ from json import dumps
 from common.errors import OK
 from django.conf import settings
 from django.http import HttpResponse
+from django.http import HttpResponseNotAllowed
 
 
 def render_json(data=None, error=OK) -> HttpResponse:
@@ -20,3 +21,15 @@ def render_json(data=None, error=OK) -> HttpResponse:
         json_str = dumps(result, ensure_ascii=False, separators=[',', ':'])
 
     return HttpResponse(json_str)
+
+
+def allow_http_methods(**methods):
+    """检查允许的 HTTP 方法"""
+    def deco(view_func):
+        def wrap(request, *args, **kwargs):
+            methods = [m.upper() for m in methods]
+            if request.method not in methods:
+                return HttpResponseNotAllowed(methods)
+            return view_func(request, *args, **kwargs)
+        return wrap
+    return decorator
