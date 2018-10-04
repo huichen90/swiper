@@ -13,8 +13,13 @@
        {
            "status": 0,
            "data": {
-               "user": {"uid": 11, "username": "Hello World"},
-               "data": "2018-09-12"
+               "user": {
+                   "uid": 123321,
+                   "username": "Lion",
+                   "age": 21,
+                   "sex": "Male"
+                },
+               "date": "2018-09-12",
            }
        }
        ```
@@ -66,10 +71,10 @@
         ------|----------|------|-----------------------
          user |        Y | User | 用户数据
 
-3. get profile (获取配置信息)
+3. 获取配置信息
     * **Description**: -
     * **Method**: GET
-    * **Path**: /user/verification/code
+    * **Path**: /user/profile/get
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
@@ -80,10 +85,10 @@
         ------|----------|------|-----------------------
               |        Y |    - | -
 
-4. set profile (修改配置)
+4. 修改配置
     * **Description**: -
     * **Method**: POST
-    * **Path**: /user/profile/setup
+    * **Path**: /user/profile/set
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
@@ -94,7 +99,7 @@
         ------|----------|------|-----------------------
               |        Y |    - | -
 
-5. upload avatar (上传头像)
+5. 上传头像
     * **Description**: -
     * **Method**: POST
     * **Path**: /user/avatar/upload
@@ -201,4 +206,18 @@
 code | description
 -----|-------------
    0 | 正常
-1000 | 用户不存在
+1000 | 服务器内部错误
+1001 | 参数错误
+1002 | 数据错误
+1003 | 不存在
+1004 | 达到上限
+1005 | 没有权限
+1006 | 超时
+1007 | 已过期
+1008 | 时间未到
+1009 | 无效验证码
+2000 | 用户未登录
+2001 | 名字冲突
+2002 | 金钱不足
+2003 | 用户不存在
+2004 | 不是好友关系

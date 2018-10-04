@@ -150,7 +150,7 @@ LOGGING = {
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': f'{BASE_DIR}/logs/info.log',
             'when': 'D',  # 每天切割日志
-            'backupCount': 30,
+            'backupCount': 30,  # 日志保留 30 天
             'formatter': 'simple',
             'level': 'INFO',
         },
@@ -158,7 +158,7 @@ LOGGING = {
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': f'{BASE_DIR}/logs/error.log',
             'when': 'W0',  # 每周一切割日志
-            'backupCount': 4,
+            'backupCount': 4,  # 日志保留 4 周
             'formatter': 'verbose',
             'level': 'WARNING',
         }
