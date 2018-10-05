@@ -26,4 +26,5 @@ def send_sms(phone_num, text):
     response = requests.post(platform_config.HY_SMS_URL, data=params, headers=headers)
     return response
 
+
 async_send_sms = call_by_worker(send_sms)  # 为方便调试，将异步调用单独定义一次

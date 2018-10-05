@@ -34,17 +34,17 @@ class User(models.Model):
     @cached_property
     def avatar(self):
         '''头像'''
-        return Avatar.objects.get_or_create(id=self.id)[0]
+        return Avatar.get_or_create(id=self.id)[0]
 
     @cached_property
     def profile(self):
         '''资料'''
-        return Profile.objects.get_or_create(id=self.id)[0]
+        return Profile.get_or_create(id=self.id)[0]
 
     @cached_property
     def vip(self):
         '''用户会员'''
-        return Vip.objects.get(id=self.vip_id)
+        return Vip.get(id=self.vip_id)
 
     @cached_property
     def is_dating_ready(self):

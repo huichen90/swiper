@@ -33,7 +33,7 @@ def get_or_create(cls, *args, **kwargs):
             return model_obj
 
     # 执行原生方法，并添加缓存
-    model_obj = cls.objects.get_or_create(*args, **kwargs)
+    model_obj = cls.get_or_create(*args, **kwargs)
     rds.set(key, model_obj)
 
 
@@ -56,5 +56,6 @@ def patch_model():
     # 修改 save
     ori_save = models.base.Model.save
     models.Model.save = save
+
 
 patch_model()

@@ -125,9 +125,9 @@ class MSRedis(object):
         self.slave = Redis(**conf['Slave'])
         self.read_commands = [
             'ttl', 'exists', 'expire', 'get', 'keys',
-            'hget', 'hgetall', 'hkeys','hmget',
+            'hget', 'hgetall', 'hkeys', 'hmget',
             'sismember', 'smembers', 'sdiff', 'sinter', 'sunion'
-            'zrevrange', 'zrevrangebyscore',  'zrevrank',  'zscore'
+            'zrevrange', 'zrevrangebyscore', 'zrevrank', 'zscore'
         ]
 
     def __getattribute__(self, name):

@@ -23,7 +23,7 @@ def verify_code(request):
     if rds.get(key) != code:
         raise errors.InvalidPIN
 
-    user, created = User.objects.get_or_create(phone_num=phone_num)
+    user, created = User.get_or_create(phone_num=phone_num)
     if created:
         user.init()
     return user.to_dict()

@@ -53,15 +53,15 @@ class VipPermRelation(models.Model):
 
     @classmethod
     def add_relation(cls, vip_name, perm_name):
-        vip = Vip.objects.get(name=vip_name)
-        perm = Permission.objects.get(name=perm_name)
-        cls.objects.get_or_create(vip_id=vip_id, perm_id=perm_id)
+        vip = Vip.get(name=vip_name)
+        perm = Permission.get(name=perm_name)
+        cls.get_or_create(vip_id=vip_id, perm_id=perm_id)
 
     @classmethod
     def del_relation(cls, vip_name, perm_name):
-        vip = Vip.objects.get(name=vip_name)
-        perm = Permission.objects.get(name=perm_name)
+        vip = Vip.get(name=vip_name)
+        perm = Permission.get(name=perm_name)
         try:
-            cls.objects.get(vip_id=vip_id, perm_id=perm_id).delete()
+            cls.get(vip_id=vip_id, perm_id=perm_id).delete()
         except cls.DoesNotExist:
             pass
