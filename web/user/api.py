@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from common import rds
+from lib.cache import rds
 from common import errors
 from common.http import allow_http_methods
 from user.models import User
@@ -19,7 +19,7 @@ def verify_code(request):
     '''提交验证码'''
     phone_num = request.POST.get('phone')
     code = request.POST.get('code')
-    key = keys.LOGIN_SMS % phone_num
+    key = keys.LOGIN_SMS_KEY % phone_num
     if rds.get(key) != code:
         raise errors.InvalidPIN
 

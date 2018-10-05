@@ -1,4 +1,4 @@
-from common import rds
+from lib.cache import rds
 from common import sms
 from common import keys
 from common import errors
@@ -6,7 +6,7 @@ from common import errors
 
 def send_login_code(phone_num):
     '''发送登陆验证短信'''
-    key = keys.LOGIN_SMS % phone_num
+    key = keys.LOGIN_SMS_KEY % phone_num
     if not rds.exists(key):
         random_code = sms.gen_verify_code(4)
         sms.async_send_sms(phone_num, random_code)

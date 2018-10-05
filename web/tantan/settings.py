@@ -32,10 +32,12 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'user',
+    'vip',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +59,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
             ],
@@ -119,9 +122,16 @@ STATIC_URL = '/static/'
 
 # Redis
 REDIS = {
-    'host': 'localhost',
-    'port': 6379,
-    'db': 15
+    'Master': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 15
+    },
+    'Slave': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 15
+    },
 }
 
 
