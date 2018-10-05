@@ -6,5 +6,5 @@ def vip_info(request):
     vips = {}
     for vip in Vip.objects.all():
         perms = ((perm.name, perm.description) for perm in vip.perms())
-        vips[vip.level] = sorted(perms)
+        vips[vip.level] = {'price': vip.price, 'perms': sorted(perms)}
     return vips

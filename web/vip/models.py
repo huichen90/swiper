@@ -3,7 +3,8 @@ from django.db import models
 
 class Vip(models.Model):
     name = models.CharField(max_length=16)
-    level = models.IntegerField()
+    level = models.IntegerField(verbose_name='会员等级'))
+    price = models.FloatField(verbose_name='充值会员的价格, 单位：元')
 
     class Meta:
         ordering = ['level', 'name']
@@ -30,7 +31,7 @@ class Permission(models.Model):
         超级曝光
     '''
     name = models.CharField(max_length=32)
-    description = models.TextField()
+    description = models.TextField(verbose_name='权限详情介绍')
 
 
 class VipPermRelation(models.Model):
