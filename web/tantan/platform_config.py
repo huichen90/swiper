@@ -1,6 +1,4 @@
-'''
-各个第三方平台的接入配置
-'''
+'''各个第三方平台的接入配置'''
 
 # 互亿无限短信配置
 HY_SMS_URL = 'http://106.ihuyi.com/webservice/sms.php?method=Submit'
@@ -11,3 +9,9 @@ HY_SMS_PARAMS = {
     'mobile': None,
     'format':'json'
 }
+
+
+# 七牛云账号配置
+QN_ACCESS_KEY = 'kEM0sRR-meB92XU43_a6xZqhiyyTuu5yreGCbFtw'
+QN_SECRET_KEY = 'QxTKqgnOb_UVldphU261qu9IdzmjkgGHh6GQVPPy'
+QN_BUCKET = 'tantan'
