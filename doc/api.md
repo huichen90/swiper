@@ -55,12 +55,13 @@
         ------|----------|------|-----------------------
         phone |        Y |  str | 手机号, "+8618888888888"
 
-    * **Return**: None
+    * **Return**:
+        data 为 null
 
-2. 提交验证码
+2. 提交验证码登录
     * **Description**: 根据上一步的结果提交需要的数据
     * **Method**: POST
-    * **Path**: /user/verify/code
+    * **Path**: /user/login
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------

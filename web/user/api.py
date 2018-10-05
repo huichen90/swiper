@@ -2,19 +2,19 @@ from django.shortcuts import render
 
 from lib.cache import rds
 from common import errors
-from common.http import allow_http_methods
+from common.http import require_post
 from user.models import User
 from user.logic import send_login_code
 
 
-@allow_http_methods('post')
+@require_post
 def verify_phone(request):
     '''提交手机号，向用户发送验证码'''
     phone_num = request.POST.get('phone')
     send_login_code(phone_num)
 
 
-@allow_http_methods('post')
+@require_post
 def verify_code(request):
     '''提交验证码'''
     phone_num = request.POST.get('phone')
@@ -29,7 +29,7 @@ def verify_code(request):
     return user.to_dict()
 
 
-@allow_http_methods('post')
+@require_post
 def set_profile(request):
     '''修改用户配置'''
     pass

@@ -19,6 +19,9 @@ from user import api as user_api
 
 
 urlpatterns = [
-    url(r'^user/verify/phone$', user_api.verify_phone),
-    url(r'^user/verify/code$', user_api.verify_code),
+    url(r'^user/verify$', user_api.verify_phone),
+    url(r'^user/login$', user_api.login),
+    url(r'^user/profile/show$', user_api.show_profile),
+    url(r'^user/profile/update$', user_api.update_profile),
+    url(r'^user/avatar/upload$', user_api.upload_avatar),
 ]

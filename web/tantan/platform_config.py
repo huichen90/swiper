@@ -14,4 +14,5 @@ HY_SMS_PARAMS = {
 # 七牛云账号配置
 QN_ACCESS_KEY = 'kEM0sRR-meB92XU43_a6xZqhiyyTuu5yreGCbFtw'
 QN_SECRET_KEY = 'QxTKqgnOb_UVldphU261qu9IdzmjkgGHh6GQVPPy'
+QN_BASE_URL = 'http://pg483fraj.bkt.clouddn.com'
 QN_BUCKET = 'tantan'
