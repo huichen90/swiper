@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Vip(models.Model):
-    name = models.CharField(max_length=16)
-    level = models.IntegerField(verbose_name='会员等级')
+    name = models.CharField(max_length=16, unique=True)
+    level = models.IntegerField(unique=True, verbose_name='会员等级')
     price = models.FloatField(verbose_name='充值会员的价格, 单位：元')
 
     class Meta:

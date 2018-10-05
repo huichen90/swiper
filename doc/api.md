@@ -5,13 +5,13 @@
 
 1. 所有获取数据的 HTTP 接口, 参数均由 GET 方法传递
 2. 所有修改数据的 HTTP 接口, 参数均由 POST 方法传递
-3. 返回值均为 JSON 格式, 必须包含两个字段: "status", "data"
-    1. status 字段为状态码, int 类型, 为 0 时表示返回值正常, 其他任何值时均表示异常, 需客户端根据状态码为用户提供不同的错误提示
+3. 返回值均为 JSON 格式, 必须包含两个字段: "sc", "data"
+    1. sc 字段为状态码(status code), int 类型, 为 0 时表示返回值正常, 其他任何值时均表示异常, 需客户端根据状态码为用户提供不同的错误提示
     2. data 字段为返回的数据, 字典类型. 详情见下面具体接口. 当一个接口仅需状态码确认时, data 可以为空
     3. 示例
        ```json
        {
-           "status": 0,
+           "sc": 0,
            "data": {
                "user": {
                    "uid": 123321,
@@ -49,11 +49,11 @@
 1. 提交手机号
     * **Description**: 提交手机号，根据结果判断下一步需要提交的数据
     * **Method**: POST
-    * **Path**: /user/verify/phone
+    * **Path**: /user/verify
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
-        phone |        Y |  str | 手机号, "+8618888888888"
+        phone | Yes      |  str | 手机号, "+8618888888888"
 
     * **Return**:
         data 为 null
@@ -65,54 +65,68 @@
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
-         code |        Y |  int | 验证码
+         code | Yes      |  int | 验证码
 
     * **Return**:
         field | required | type | description
         ------|----------|------|-----------------------
-         user |        Y | User | 用户数据
+         user | Yes      | User | 用户数据
 
 3. 获取配置信息
     * **Description**: -
     * **Method**: GET
-    * **Path**: /user/profile/get
-    * **Params**:
-        field | required | type | description
-        ------|----------|------|-----------------------
-              |        Y |    - | -
+    * **Path**: /user/profile/show
+    * **Params**: 无需参数
 
     * **Return**:
-        field | required | type | description
-        ------|----------|------|-----------------------
-              |        Y |    - | -
+        field          | required | type  | description
+        ---------------|----------|-------|-----------------------
+        location       | Yes      | str   |  目标城市
+        min_distance   | Yes      | float |  最小查找范围
+        max_distance   | Yes      | float |  最大查找范围
+        min_dating_age | Yes      | int   |  最小交友年龄
+        max_dating_age | Yes      | int   |  最大交友年龄
+        dating_sex     | Yes      | str   |  匹配的性别
+        vibration      | Yes      | bool  |  开启震动
+        only_matche    | Yes      | bool  |  不让为匹配的人看我的相册
+        auto_play      | Yes      | bool  |  自动播放视频
 
 4. 修改配置
-    * **Description**: -
+    * **Description**: 需要修改哪个就传哪个, 虽然参数均为非必选参数, 但至少传一个
     * **Method**: POST
-    * **Path**: /user/profile/set
+    * **Path**: /user/profile/update
     * **Params**:
-        field | required | type | description
-        ------|----------|------|-----------------------
-              |        Y |    - | -
+        field          | required | type  | description
+        ---------------|----------|-------|-----------------------
+        location       |    No    | str   |  目标城市
+        min_distance   |    No    | float |  最小查找范围
+        max_distance   |    No    | float |  最大查找范围
+        min_dating_age |    No    | int   |  最小交友年龄
+        max_dating_age |    No    | int   |  最大交友年龄
+        dating_sex     |    No    | str   |  匹配的性别
+        vibration      |    No    | bool  |  开启震动
+        only_matche    |    No    | bool  |  不让为匹配的人看我的相册
+        auto_play      |    No    | bool  |  自动播放视频
 
     * **Return**:
-        field | required | type | description
-        ------|----------|------|-----------------------
-              |        Y |    - | -
+        data 为 null
 
 5. 上传头像
-    * **Description**: -
+    * **Description**: 至少上传一张
     * **Method**: POST
     * **Path**: /user/avatar/upload
     * **Params**:
-        field | required | type | description
-        ------|----------|------|-----------------------
-              |        Y |    - | -
+        field  | required | type | description
+        -------|----------|------|-----------------------
+        first  |  No      |  str | 第一张
+        second |  No      |  str | 第二张
+        third  |  No      |  str | 第三张
+        fourth |  No      |  str | 第四张
+        fifth  |  No      |  str | 第五张
+        sixth  |  No      |  str | 第六张
 
     * **Return**:
-        field | required | type | description
-        ------|----------|------|-----------------------
-              |        Y |    - | -
+        data 为 null
 
 
 ## Social 接口
@@ -124,12 +138,12 @@
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
     * **Return**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
 2. 喜欢
     * **Description**:
@@ -138,12 +152,12 @@
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
     * **Return**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
 3. 超级喜欢
     * **Description**:
@@ -152,12 +166,12 @@
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
     * **Return**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
 4. 不喜欢
     * **Description**:
@@ -166,12 +180,12 @@
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
     * **Return**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
 5. 反悔
     * **Description**:
@@ -180,12 +194,12 @@
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
     * **Return**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
 6. 曝光
     * **Description**:
@@ -194,12 +208,12 @@
     * **Params**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
     * **Return**:
         field | required | type | description
         ------|----------|------|-----------------------
-              |        Y |    - | -
+              | Yes      |    - | -
 
 
 ## status 状态码
