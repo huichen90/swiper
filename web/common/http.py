@@ -1,4 +1,6 @@
+from json import loads
 from json import dumps
+from json import JSONDecodeError
 
 from common.errors import OK
 from django.conf import settings
@@ -6,12 +8,28 @@ from django.http import HttpResponse
 from django.http import HttpResponseNotAllowed
 
 
+def is_json(test_str):
+    '''检查字符串是否是 json'''
+    if not isinstance(test_str, (str, bytes)):
+        return False
+
+    try:
+        json.loads(test_str)
+    except (TypeError, JSONDecodeError):
+        return False
+    else:
+        return True
+
+
 def render_json(data=None, error=OK) -> HttpResponse:
     '''将返回值渲染为 JSON 数据'''
-    result = {
-        'data': data or error.data,
-        'sc': error.code  # 状态码 (status code)
-    }
+    if is_json(data):
+        result = data  # 如果传入的 data 本身就是 json 格式，则直接返回
+    else:
+        result = {
+            'data': data or error.data,
+            'sc': error.code  # 状态码 (status code)
+        }
 
     if settings.DEBUG:
         # Debug 模式时，按规范格式输出 json

@@ -3,6 +3,8 @@ from datetime import date
 from django.db import models
 from django.utils.functional import cached_property
 
+from vip import Vip
+
 
 class User(models.Model):
     SEX = (
@@ -20,6 +22,9 @@ class User(models.Model):
     birth_day = models.IntegerField(default=1)
     location = models.CharField(max_length=32, verbose_name='常居地')
 
+    vip_id = models.IntegerField()  # 关联的 vip id
+    vip_expiration = models.DateTimeField(auto_now_add=True, verbose_name="会员过期时间")
+
     @cached_property
     def age(self):
         '''年龄'''
@@ -35,6 +40,11 @@ class User(models.Model):
     def profile(self):
         '''资料'''
         return Profile.objects.get_or_create(id=self.id)[0]
+
+    @cached_property
+    def vip(self):
+        '''用户会员'''
+        return Vip.objects.get(id=self.vip_id)
 
     @cached_property
     def is_dating_ready(self):
