@@ -3,7 +3,7 @@ from datetime import date
 from django.db import models
 from django.utils.functional import cached_property
 
-from vip import Vip
+from vip.models import Vip
 
 
 class User(models.Model):
