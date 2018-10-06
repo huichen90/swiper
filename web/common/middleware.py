@@ -62,7 +62,7 @@ class AuthMiddleware(MiddlewareMixin):
         # 为 request 动态添加 user 属性
         uid = request.session['uid']
         try:
-            user = User.objects.get(pk=uid)
+            user = User.get(pk=uid)
             request.user = user
         except User.DoesNotExist:
             return render_json(error=errors.UserNotExist)

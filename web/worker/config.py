@@ -1,7 +1,7 @@
 _redis_url = 'redis://127.0.0.1:6379/0'
 
 BROKER_URL = _redis_url
-BROKER_POOL_LIMIT = 1000 # Borker 连接池，默认是10
+BROKER_POOL_LIMIT = 1000  # Borker 连接池，默认是10
 
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERY_ACCEPT_CONTENT = ['pickle', 'json']

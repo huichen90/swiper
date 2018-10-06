@@ -32,10 +32,12 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'user',
+    'vip',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +59,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
             ],
@@ -119,9 +122,16 @@ STATIC_URL = '/static/'
 
 # Redis
 REDIS = {
-    'host': 'localhost',
-    'port': 6379,
-    'db': 15
+    'Master': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 15
+    },
+    'Slave': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 15
+    },
 }
 
 
@@ -150,7 +160,7 @@ LOGGING = {
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': f'{BASE_DIR}/logs/info.log',
             'when': 'D',  # 每天切割日志
-            'backupCount': 30,
+            'backupCount': 30,  # 日志保留 30 天
             'formatter': 'simple',
             'level': 'INFO',
         },
@@ -158,7 +168,7 @@ LOGGING = {
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': f'{BASE_DIR}/logs/error.log',
             'when': 'W0',  # 每周一切割日志
-            'backupCount': 4,
+            'backupCount': 4,  # 日志保留 4 周
             'formatter': 'verbose',
             'level': 'WARNING',
         }

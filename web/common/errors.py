@@ -1,4 +1,10 @@
 # coding: utf-8
+'''
+程序内部错误
+
+程序内部正常的逻辑错误直接抛出异常给前端，经过异常中间件的时候会将对应的错误码返回给前端
+'''
+
 
 class LogicError(BaseException):
     '''程序内部逻辑错误'''
@@ -15,6 +21,7 @@ def gen_error(name: str, err_code: int) -> LogicError:
     base_cls = (LogicError,)
     cls_attr = {'code': err_code}
     return type(name, base_cls, cls_attr)
+
 
 # 正常
 OK = gen_error('OK', 0)
