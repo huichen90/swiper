@@ -2,7 +2,7 @@ import random
 
 import requests
 
-from tantan import platform_config
+from swiper import platform_config
 from worker import call_by_worker
 
 
