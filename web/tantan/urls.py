@@ -34,9 +34,9 @@ urlpatterns = [
     url(r'social/superlike$', social_api.superlike),
     url(r'social/dislike$', social_api.dislike),
     url(r'social/rewind$', social_api.rewind),
-
-    # Friend API
-    url(r'friend/list$', social_api.friend_list),
+    url(r'social/likedme$', social_api.who_liked_me),
+    url(r'social/friends$', social_api.friend_list),
+    url(r'social/break_off$', social_api.break_off),
 
     # VIP API
     url(r'vip/info$', vip_api.vip_info),

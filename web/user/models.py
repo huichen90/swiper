@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from vip.models import Vip
+from social.models import Friends
 
 
 class User(models.Model):
@@ -45,6 +46,12 @@ class User(models.Model):
     def vip(self):
         '''用户会员'''
         return Vip.get(id=self.vip_id)
+
+    @cached_property
+    def friends(self):
+        '''用户的好友列表'''
+        fid_list = Friends.friend_id_list(self.id)
+        return User.objects.filter(id__in=fid_list)  # objects 是特殊的类属性, 只能通过类调用
 
     @cached_property
     def is_dating_ready(self):

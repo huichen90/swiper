@@ -24,6 +24,27 @@
        }
        ```
 
+## status 状态码
+
+code | description
+-----|-------------
+   0 | 正常
+1000 | 服务器内部错误
+1001 | 参数错误
+1002 | 数据错误
+1003 | 不存在
+1004 | 达到上限
+1005 | 没有权限
+1006 | 超时
+1007 | 已过期
+1008 | 时间未到
+1009 | 无效验证码
+2000 | 用户未登录
+2001 | 名字冲突
+2002 | 金钱不足
+2003 | 用户不存在
+2004 | 不是好友关系
+
 
 ## 基础数据格式
 
@@ -144,6 +165,7 @@
         auto_play      |    No    | bool  |  自动播放视频
 
     * **Return**:
+
         data 为 null
 
 5. 上传头像
@@ -162,6 +184,7 @@
         sixth  |  No      |  str | 第六张
 
     * **Return**:
+
         data 为 null
 
 
@@ -186,7 +209,7 @@
             "sc": 0,
             "data": {
                 "users": [
-                    {"uid": 123, "nickname": "Miao", "age": 21, ...},
+                    {"uid": 123, "nickname": "Da", "age": 21, ...},
                     {"uid": 456, "nickname": "Miao", "age": 21, ...},
                     ...
                 ],
@@ -201,9 +224,9 @@
     * **Path**: /social/like
     * **Params**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        uid   | Yes      |  int | 被滑用户的 uid
+        field       | required | type | description
+        ------------|----------|------|-----------------------
+        stranger_id | Yes      |  int | 被滑用户的 uid
 
     * **Return**:
 
@@ -217,9 +240,9 @@
     * **Path**: /social/superlike
     * **Params**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        uid   | Yes      |  int | 被滑用户的 uid
+        field       | required | type | description
+        ------------|----------|------|-----------------------
+        stranger_id | Yes      |  int | 被滑用户的 uid
 
     * **Return**:
 
@@ -233,9 +256,9 @@
     * **Path**: /social/dislike
     * **Params**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        uid   | Yes      |  int | 被滑用户的 uid
+        field       | required | type | description
+        ------------|----------|------|-----------------------
+        stranger_id | Yes      |  int | 被滑用户的 uid
 
     * **Return**:
 
@@ -247,34 +270,76 @@
     * **Path**: /social/rewind
     * **Params**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        field       | required | type | description
+        ------------|----------|------|-----------------------
+        stranger_id | Yes      |  int | 被滑用户的 uid
 
     * **Return**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        data 为 null
 
+6. 查看谁喜欢过我
+    * **Description**:
+    * **Method**: GET
+    * **Path**: social/likedme
+    * **Params**: 无需参数
 
-## status 状态码
+    * **Return**:
 
-code | description
------|-------------
-   0 | 正常
-1000 | 服务器内部错误
-1001 | 参数错误
-1002 | 数据错误
-1003 | 不存在
-1004 | 达到上限
-1005 | 没有权限
-1006 | 超时
-1007 | 已过期
-1008 | 时间未到
-1009 | 无效验证码
-2000 | 用户未登录
-2001 | 名字冲突
-2002 | 金钱不足
-2003 | 用户不存在
-2004 | 不是好友关系
+        field | required | type      | description
+        ------|----------|-----------|-----------------------
+        users | Yes      | User List | 喜欢过我的用户数据列表
+
+        示例:
+        ```json
+        {
+            "sc": 0,
+            "data": {
+                "users": [
+                    {"uid": 123, "nickname": "Da", "age": 21, ...},
+                    {"uid": 456, "nickname": "Miao", "age": 21, ...},
+                    ...
+                ]
+            }
+        }
+        ```
+
+7. 查看好友列表
+    * **Description**:
+    * **Method**: GET
+    * **Path**: social/friends
+    * **Params**: 无需参数
+
+    * **Return**:
+
+        field   | required | type      | description
+        --------|----------|-----------|-----------------------
+        friends | Yes      | User List | 我的好友数据列表
+
+        示例:
+        ```json
+        {
+            "sc": 0,
+            "data": {
+                "friends": [
+                    {"uid": 123, "nickname": "Da", "age": 21, ...},
+                    {"uid": 456, "nickname": "Miao", "age": 21, ...},
+                    ...
+                ]
+            }
+        }
+        ```
+
+8. 断绝好友关系
+    * **Description**:
+    * **Method**: POST
+    * **Path**: social/break_off
+    * **Params**:
+
+        field       | required | type | description
+        ------------|----------|------|-----------------------
+        stranger_id | Yes      |  int | 要绝交的用户 uid
+
+    * **Return**:
+
+        data 为 null
