@@ -57,7 +57,15 @@
         phone | Yes      |  str | 手机号, "+8618888888888"
 
     * **Return**:
+
         data 为 null
+
+        ```json
+        {
+            "sc": 0,
+            "data": null
+        }
+        ```
 
 2. 提交验证码登录
     * **Description**: 根据上一步的结果提交需要的数据
@@ -74,6 +82,28 @@
         field | required | type | description
         ------|----------|------|-----------------------
          user | Yes      | User | 用户数据
+
+        示例:
+        ```json
+        {
+            "sc": 0,
+            "data": {
+                "user": {
+                    "uid": 123,                   // 用户 id
+                    "nickname": "Miao",           // 用户名
+                    "age": 21,                    // 年龄
+                    "sex": "M",                   // 性别
+                    "location": "China/Beijing",  // 常居地
+                    "avatars": [                  // 头像 URL 列表, 最多为 6 张
+                        "http://xxx.com/user/avatar/123/1.jpg",
+                        "http://xxx.com/user/avatar/123/2.jpg",
+                        "http://xxx.com/user/avatar/123/3.jpg",
+                        ...
+                    ]
+                },
+            },
+        }
+        ```
 
 3. 获取配置信息
     * **Description**: -
@@ -141,17 +171,29 @@
     * **Description**:
     * **Method**: GET
     * **Path**: /social/recommend
-    * **Params**:
-
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+    * **Params**: 无需参数
 
     * **Return**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        field | required | type      | description
+        ------|----------|-----------|-----------------------
+        users | Yes      | User List | 用户数据列表
+
+        示例:
+
+        ```json
+        {
+            "sc": 0,
+            "data": {
+                "users": [
+                    {"uid": 123, "nickname": "Miao", "age": 21, ...},
+                    {"uid": 456, "nickname": "Miao", "age": 21, ...},
+                    ...
+                ],
+            }
+        }
+        ```
+
 
 2. 喜欢
     * **Description**:
@@ -161,13 +203,13 @@
 
         field | required | type | description
         ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        uid   | Yes      |  int | 被滑用户的 uid
 
     * **Return**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        field   | required | type | description
+        --------|----------|------|-----------------------
+        matched | Yes      | bool | 是否与此用户匹配
 
 3. 超级喜欢
     * **Description**:
@@ -177,13 +219,13 @@
 
         field | required | type | description
         ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        uid   | Yes      |  int | 被滑用户的 uid
 
     * **Return**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        field   | required | type | description
+        --------|----------|------|-----------------------
+        matched | Yes      | bool | 是否与此用户匹配
 
 4. 不喜欢
     * **Description**:
@@ -193,34 +235,16 @@
 
         field | required | type | description
         ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        uid   | Yes      |  int | 被滑用户的 uid
 
     * **Return**:
 
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
+        data 为 null
 
 5. 反悔
     * **Description**:
     * **Method**: POST
     * **Path**: /social/rewind
-    * **Params**:
-
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
-
-    * **Return**:
-
-        field | required | type | description
-        ------|----------|------|-----------------------
-        -     | Yes      |    - | -
-
-6. 曝光
-    * **Description**:
-    * **Method**: POST
-    * **Path**: /social/stepup
     * **Params**:
 
         field | required | type | description

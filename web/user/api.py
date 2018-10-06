@@ -31,7 +31,7 @@ def login(request):
         user.init()
     request.session['uid'] = user.id
     request.session['nickname'] = user.nickname
-    return user.to_dict()
+    return {'user': user.to_dict()}
 
 
 def show_profile(request):
