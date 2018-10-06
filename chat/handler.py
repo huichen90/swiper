@@ -19,31 +19,10 @@ import logic
 Packet = namedtuple('Packet', ['tag', 'data'])
 
 
-def handle_private_msg(conn, msg):
-    '''处理私人消息'''
-    try:
-        log.logger.debug('Receive user msg: %s' % repr(msg))
-        if msg.kind == 'message' and msg.channel.startswith('PRIVATE:'):
-            self.write_message(msg.body)
-    except Exception:
-        log.trace_err()
-
-
-def handle_global_msg(connections, msg):
-    '''处理全局消息'''
-    try:
-        log.logger.debug('Receive globle msg: %s' % repr(msg))
-        if msg.kind == 'message':
-            # 向所有客户端推送消息
-            for cli_conn in connections.values():
-                cli_conn.write_message(msg.body)
-    except Exception:
-        log.trace_err()
-
-
 class ChatHandler(WebSocketHandler):
     '''WebSocket 处理类
-        1. 连接时 header 中传入用户唯一标识 UDID
+        1. 客户端需要先登陆 Web 系统，取得 session id 再来与 Chat Server 建立连接
+        2. 连接时 header 中传入用户唯一标识 session_id
 
         数据结构
             connections: {
@@ -51,18 +30,11 @@ class ChatHandler(WebSocketHandler):
                 uid2: conn_user_2,
             }
 
-            world_history: {
-                S1: [{...}, {...}, ...]
-                S2: [{...}, {...}, ...]
-            }
-
         频道格式: "频道名" 或 "频道名:其他标识"
             BROADCAST
-            NOTICE
             PRIVATE:uid
     '''
     connections = {}
-    world_history = defaultdict(list)
 
     def __init__(self, application, request, **kwargs):
         super().__init__(self, application, request, **kwargs)
@@ -133,11 +105,20 @@ class ChatHandler(WebSocketHandler):
     @coroutine
     def listen(self):
         '''监听用户频道'''
+        def handle_private_msg(msg):
+            '''处理私人消息'''
+            try:
+                log.logger.debug('Receive user msg: %s' % repr(msg))
+                if msg.kind == 'message' and msg.channel.startswith('PRIVATE:'):
+                    self.write_message(msg.body)
+            except Exception:
+                log.trace_err()
+
         try:
             # 添加订阅
             channels = ['PRIVATE:%s' % self.uid]  # 私聊
             yield Task(self.rds.subscribe, channels)
-            self.rds.listen(self, handle_msg)
+            self.rds.listen(handle_private_msg)
         except Exception:
             log.trace_err()
 
@@ -149,6 +130,17 @@ class ChatHandler(WebSocketHandler):
 
         全局广播频道使用单独的监听器, 收到消息后直接写回客户端
         '''
+        def handle_global_msg(msg):
+            '''处理全局消息'''
+            try:
+                log.logger.debug('Receive globle msg: %s' % repr(msg))
+                if msg.kind == 'message':
+                    # 向所有客户端推送消息
+                    for cli_conn in cls.connections.values():
+                        cli_conn.write_message(msg.body)
+            except Exception:
+                log.trace_err()
+
         try:
             # 检查全局监听器
             rds_listener = cls.connect_redis()
@@ -156,7 +148,7 @@ class ChatHandler(WebSocketHandler):
             # 开启 PUB/SUB 监听
             channels = ['BROADCAST']
             yield Task(rds_listener.subscribe, channels)
-            rds_listener.listen(cls.connections, handle_msg)
+            rds_listener.listen(handle_global_msg)
         except Exception:
             log.trace_err()
 
