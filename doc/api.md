@@ -30,12 +30,12 @@
 1. User
     ```json
     {
-        "uid": 123,                  // 用户 id
-        "nickname": "Miao",          // 用户名
-        "age": 21,                   // 年龄
-        "sex": "M",                  // 性别
-        "location": "中国/北京/北京",  // 常居地
-        "avatars": [                 // 头像 URL 列表, 最多为 6 张
+        "uid": 123,                   // 用户 id
+        "nickname": "Miao",           // 用户名
+        "age": 21,                    // 年龄
+        "sex": "M",                   // 性别
+        "location": "China/Beijing",  // 常居地
+        "avatars": [                  // 头像 URL 列表, 最多为 6 张
             "http://xxx.com/user/avatar/123/1.jpg",
             "http://xxx.com/user/avatar/123/2.jpg",
             "http://xxx.com/user/avatar/123/3.jpg",
@@ -51,6 +51,7 @@
     * **Method**: POST
     * **Path**: /user/verify
     * **Params**:
+
         field | required | type | description
         ------|----------|------|-----------------------
         phone | Yes      |  str | 手机号, "+8618888888888"
@@ -63,11 +64,13 @@
     * **Method**: POST
     * **Path**: /user/login
     * **Params**:
+
         field | required | type | description
         ------|----------|------|-----------------------
          code | Yes      |  int | 验证码
 
     * **Return**:
+
         field | required | type | description
         ------|----------|------|-----------------------
          user | Yes      | User | 用户数据
@@ -79,6 +82,7 @@
     * **Params**: 无需参数
 
     * **Return**:
+
         field          | required | type  | description
         ---------------|----------|-------|-----------------------
         location       | Yes      | str   |  目标城市
@@ -96,6 +100,7 @@
     * **Method**: POST
     * **Path**: /user/profile/update
     * **Params**:
+
         field          | required | type  | description
         ---------------|----------|-------|-----------------------
         location       |    No    | str   |  目标城市
@@ -116,6 +121,7 @@
     * **Method**: POST
     * **Path**: /user/avatar/upload
     * **Params**:
+
         field  | required | type | description
         -------|----------|------|-----------------------
         first  |  No      |  str | 第一张
@@ -136,84 +142,96 @@
     * **Method**: GET
     * **Path**: /social/recommend
     * **Params**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
     * **Return**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
 2. 喜欢
     * **Description**:
     * **Method**: POST
     * **Path**: /social/like
     * **Params**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
     * **Return**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
 3. 超级喜欢
     * **Description**:
     * **Method**: POST
     * **Path**: /social/superlike
     * **Params**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
     * **Return**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
 4. 不喜欢
     * **Description**:
     * **Method**: POST
     * **Path**: /social/dislike
     * **Params**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
     * **Return**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
 5. 反悔
     * **Description**:
     * **Method**: POST
     * **Path**: /social/rewind
     * **Params**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
     * **Return**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
 6. 曝光
     * **Description**:
     * **Method**: POST
     * **Path**: /social/stepup
     * **Params**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
     * **Return**:
+
         field | required | type | description
         ------|----------|------|-----------------------
-              | Yes      |    - | -
+        -     | Yes      |    - | -
 
 
 ## status 状态码
