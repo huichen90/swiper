@@ -1,9 +1,10 @@
-from datetime import date
+import datetime
 
 from django.db import models
 from django.utils.functional import cached_property
 
 from vip.models import Vip
+from social.models import Friends
 
 
 class User(models.Model):
@@ -16,7 +17,7 @@ class User(models.Model):
     nickname = models.CharField(max_length=16)
 
     # user info
-    sex = models.CharField(max_length=16, choices=SEX)
+    sex = models.CharField(max_length=16, choices=SEX, blank=False, null=False)
     birth_year = models.IntegerField(default=1990)
     birth_month = models.IntegerField(default=1)
     birth_day = models.IntegerField(default=1)
@@ -28,23 +29,29 @@ class User(models.Model):
     @cached_property
     def age(self):
         '''年龄'''
-        birthday = datetime.date(birth_year, birth_month, birth_day)
-        return (date.today() - birthday).days // 365
+        birthday = datetime.date(self.birth_year, self.birth_month, self.birth_day)
+        return (datetime.date.today() - birthday).days // 365
 
     @cached_property
     def avatar(self):
         '''头像'''
-        return Avatar.objects.get_or_create(id=self.id)[0]
+        return Avatar.get_or_create(id=self.id)[0]
 
     @cached_property
     def profile(self):
         '''资料'''
-        return Profile.objects.get_or_create(id=self.id)[0]
+        return Profile.get_or_create(id=self.id)[0]
 
     @cached_property
     def vip(self):
         '''用户会员'''
-        return Vip.objects.get(id=self.vip_id)
+        return Vip.get(id=self.vip_id)
+
+    @cached_property
+    def friends(self):
+        '''用户的好友列表'''
+        fid_list = Friends.friend_id_list(self.id)
+        return User.objects.filter(id__in=fid_list)  # objects 是特殊的类属性, 只能通过类调用
 
     @cached_property
     def is_dating_ready(self):
@@ -64,15 +71,15 @@ class User(models.Model):
 
 class Avatar(models.Model):
     '''用户头像'''
-    first = models.URLField()
-    second = models.URLField()
-    third = models.URLField()
-    fourth = models.URLField()
-    fifth = models.URLField()
-    sixth = models.URLField()
+    first = models.URLField(null=True, blank=True)
+    second = models.URLField(null=True, blank=True)
+    third = models.URLField(null=True, blank=True)
+    fourth = models.URLField(null=True, blank=True)
+    fifth = models.URLField(null=True, blank=True)
+    sixth = models.URLField(null=True, blank=True)
 
     def __iter__(self):
-        urls = [first, self.second, self.third,
+        urls = [self.first, self.second, self.third,
                 self.fourth, self.fifth, self.sixth]
         return filter(None, urls)  # 取出非空头像
 
@@ -83,6 +90,7 @@ class Profile(models.Model):
         ('Female', '女性'),
         ('All', '不限'),
     )
+
     # 交友设置
     location = models.CharField(max_length=32, verbose_name='目标城市')
     min_distance = models.FloatField(default=1.0, verbose_name='最小查找范围')
@@ -90,6 +98,7 @@ class Profile(models.Model):
     min_dating_age = models.IntegerField(default=18, verbose_name='最小交友年龄')
     max_dating_age = models.IntegerField(default=50, verbose_name='最大交友年龄')
     dating_sex = models.CharField(max_length=16, choices=SEX, verbose_name='匹配的性别')
+
     # 其他设置
     vibration = models.BooleanField(default=True, verbose_name='开启震动')
     only_matche = models.BooleanField(default=False, verbose_name='不让为匹配的人看我的相册')

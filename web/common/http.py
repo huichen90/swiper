@@ -23,7 +23,7 @@ def is_json(test_str):
 
 def render_json(data=None, error=OK) -> HttpResponse:
     '''将返回值渲染为 JSON 数据'''
-    if is_json(data):
+    if data and is_json(data):
         result = data  # 如果传入的 data 本身就是 json 格式，则直接返回
     else:
         result = {
@@ -51,3 +51,6 @@ def allow_http_methods(*methods):
             return view_func(request, *args, **kwargs)
         return wrap
     return decor
+
+
+require_post = allow_http_methods('post')

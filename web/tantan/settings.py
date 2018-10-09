@@ -32,10 +32,13 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'user',
+    'social',
+    'vip',
 ]
 
 MIDDLEWARE = [
@@ -44,6 +47,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     'common.middleware.JsonMiddleware',
     'common.middleware.AuthMiddleware',
 ]
@@ -57,6 +61,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
             ],
@@ -100,9 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -119,9 +124,16 @@ STATIC_URL = '/static/'
 
 # Redis
 REDIS = {
-    'host': 'localhost',
-    'port': 6379,
-    'db': 15
+    'Master': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 15
+    },
+    'Slave': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 15
+    },
 }
 
 

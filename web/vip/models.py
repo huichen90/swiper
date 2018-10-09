@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Vip(models.Model):
-    name = models.CharField(max_length=16)
-    level = models.IntegerField(verbose_name='会员等级')
+    name = models.CharField(max_length=16, unique=True)
+    level = models.IntegerField(unique=True, verbose_name='会员等级')
     price = models.FloatField(verbose_name='充值会员的价格, 单位：元')
 
     class Meta:
@@ -25,10 +25,9 @@ class Vip(models.Model):
 class Permission(models.Model):
     '''
     用户特权
-        超级喜欢权限
-        反悔权限
-        查看被喜欢权限
-        超级曝光
+        superlike 超级喜欢的权限
+        rewind    反悔的权限
+        likeme    查看谁喜欢我的权限
     '''
     name = models.CharField(max_length=32)
     description = models.TextField(verbose_name='权限详情介绍')
@@ -42,7 +41,6 @@ class VipPermRelation(models.Model):
         VIP1: 超级喜欢权限
         VIP2: 全部 VIP1 的权限 + 反悔权限
         VIP3: 全部 VIP2 的权限 + 查看被喜欢权限
-        VIP4: 全部 VIP3 的权限 + 超级曝光
 
     NOTE:
         如果需要可以将权限做的更细，每种权限限制每天的使用次数。
@@ -53,15 +51,15 @@ class VipPermRelation(models.Model):
 
     @classmethod
     def add_relation(cls, vip_name, perm_name):
-        vip = Vip.objects.get(name=vip_name)
-        perm = Permission.objects.get(name=perm_name)
-        cls.objects.get_or_create(vip_id=vip_id, perm_id=perm_id)
+        vip = Vip.get(name=vip_name)
+        perm = Permission.get(name=perm_name)
+        cls.get_or_create(vip_id=vip_id, perm_id=perm_id)
 
     @classmethod
     def del_relation(cls, vip_name, perm_name):
-        vip = Vip.objects.get(name=vip_name)
-        perm = Permission.objects.get(name=perm_name)
+        vip = Vip.get(name=vip_name)
+        perm = Permission.get(name=perm_name)
         try:
-            cls.objects.get(vip_id=vip_id, perm_id=perm_id).delete()
+            cls.get(vip_id=vip_id, perm_id=perm_id).delete()
         except cls.DoesNotExist:
             pass
