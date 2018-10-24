@@ -2,7 +2,7 @@ from lib.cache import rds
 from common import sms
 from common import keys
 from common import errors
-from tantan import platform_config
+from swiper import platform_config
 from worker import call_by_worker
 from lib.qiniu import qiniu_upload_data
 

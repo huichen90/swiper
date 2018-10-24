@@ -2,7 +2,7 @@ import os
 
 import qiniu
 
-from tantan import platform_config as plt
+from swiper import platform_config as plt
 from worker import call_by_worker
 
 authorization = qiniu.Auth(plt.QN_ACCESS_KEY, plt.QN_SECRET_KEY)

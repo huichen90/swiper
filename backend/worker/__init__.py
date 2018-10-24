@@ -1,7 +1,7 @@
 import os
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tantan.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'swiper.settings')
 
 # TODO
 #   异步上传头像到七牛云
@@ -9,7 +9,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tantan.settings')
 #   异步存储处理
 
 # 创建 Celery Application
-celery_app = Celery('tantan')
+celery_app = Celery('swiper')
 celery_app.config_from_object('worker.config')
 celery_app.autodiscover_tasks()
 
